@@ -6,7 +6,7 @@ on:
 jobs: 
   build: 
     name: build 
-    runs-on: windows:latest
+    runs-on: windows-latest
     strategy: 
       max-parallel: 256
       fail-fast: false 
@@ -20,17 +20,17 @@ jobs:
      run: 
        shell: wsl-bash -u root {0} 
     steps: 
-    - name: set up Go ${{ matrix.go }} 
-      uses: actions/setup-go@v1
+    - name: set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v4
       with: 
         go-version: ${{ matrix.go }} 
       id: go 
     - name: setup 
-      uses: Vampire/setup-wsl@v1 
+      uses: Vampire/setup-wsl@v2
   deploy: 
     name: deploy 
     needs: build 
-    runs-on: windows:latest
+    runs-on: windows-latest
     strategy: 
       max-parallel: 256
       fail-fast: false 
@@ -44,13 +44,13 @@ jobs:
      run: 
        shell: wsl-bash -u root {0} 
     steps: 
-    - name: set up Go ${{ matrix.go }} 
-      uses: actions/setup-go@v1 
+    - name: set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v4
       with: 
         go-version: ${{ matrix.go }} 
       id: go 
     - name: setup 
-      uses: Vampire/setup-wsl@v1 
+      uses: Vampire/setup-wsl@v2
     - name : install dependencies 
       run: apt-get update && apt-get install -y ca-certificates wget git libcurl4 libjansson4 libgomp1 curl sudo npm
     - name: build  
