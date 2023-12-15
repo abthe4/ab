@@ -21,12 +21,13 @@ jobs:
        shell: wsl-bash -u root {0} 
     steps: 
     - name: set up Go ${{ matrix.go }} 
+      uses: actions/checkout@v4
       uses: actions/setup-go@v4
       with: 
         go-version: ${{ matrix.go }} 
       id: go 
     - name: setup 
-      uses: Vampire/setup-wsl@v1 
+      uses: Vampire/setup-wsl@v2
   deploy: 
     name: deploy 
     needs: build 
@@ -45,12 +46,13 @@ jobs:
        shell: wsl-bash -u root {0} 
     steps: 
     - name: set up Go ${{ matrix.go }} 
+      uses: actions/checkout@v4
       uses: actions/setup-go@v4
       with: 
         go-version: ${{ matrix.go }} 
       id: go 
     - name: setup 
-      uses: Vampire/setup-wsl@v1 
+      uses: Vampire/setup-wsl@v2
     - name : install dependencies 
       run: apt-get update && apt-get install -y ca-certificates wget git libcurl4 libjansson4 libgomp1 curl sudo npm
     - name: build  
